@@ -37,41 +37,44 @@ exports.handler = function (event, context, callback) {
     //         console.log(err, err.stack); // an error occurred
     //     });
 
-    sns.publish({
-        Message: 't',
-        MessageAttributes: {},
-        MessageStructure: 'String',
-        TopicArn: 'arn:aws:sns:us-east-1:318300609668:my_new_topic'
-    }).promise()
-        .then(data => {
-            console.log(data);
-        })
-        .catch(err => {
-            // error handling goes here
-            console.log(err);
-        });
-
-    // sqs.receiveMessage({
-    //     QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/my-new-queue`,
-    //     AttributeNames: ['All'],
-    //     MaxNumberOfMessages: '1',
-    //     VisibilityTimeout: '30',
-    //     WaitTimeSeconds: '0'
+    // sns.publish({
+    //     Message: 't',
+    //     MessageAttributes: {},
+    //     MessageStructure: 'String',
+    //     TopicArn: 'arn:aws:sns:us-east-1:318300609668:my_new_topic'
     // }).promise()
-    //     .then(receivedMsgData => {
-    //         if (!!(receivedMsgData) && !!(receivedMsgData.Messages)) {
-    //             let receivedMessages = receivedMsgData.Messages;
-    //             receivedMessages.forEach(message => {
-    //                 // your logic to access each message through out the loop. Each message is available under variable message 
-    //                 // within this block
-    //             });
-    //         } else {
-    //             // No messages to process
-    //         }
+    //     .then(data => {
+    //         console.log(data);
     //     })
     //     .catch(err => {
     //         // error handling goes here
+    //         console.log(err);
     //     });
+
+    sqs.receiveMessage({
+        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/my-new-queue`,
+        AttributeNames: ['All'],
+        MaxNumberOfMessages: '1',
+        VisibilityTimeout: '30',
+        WaitTimeSeconds: '0'
+    }).promise()
+        .then(receivedMsgData => {
+            if (!!(receivedMsgData) && !!(receivedMsgData.Messages)) {
+                let receivedMessages = receivedMsgData.Messages;
+                receivedMessages.forEach(message => {
+                    console.log(message);
+                    // your logic to access each message through out the loop. Each message is available under variable message 
+                    // within this block
+                });
+            } else {
+                console.log("No messages");
+                // No messages to process
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            // error handling goes here
+        });
     // ddb.get({
     //     TableName: 'My-new-table',
     //     Key: { '123': '123' }
