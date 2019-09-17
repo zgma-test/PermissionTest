@@ -1,0 +1,206 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "f9bc0876-8b11-4b54-a8ee-ad455c840ab4": {
+        "id": "f9bc0876-8b11-4b54-a8ee-ad455c840ab4",
+        "parent": null,
+        "name": "PermissionTest",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "d4cdbf93-b397-49c2-b68c-d55e96851e46"
+        ],
+        "isRemovable": false,
+        "filePath": "PermissionTest"
+      },
+      "d4cdbf93-b397-49c2-b68c-d55e96851e46": {
+        "id": "d4cdbf93-b397-49c2-b68c-d55e96851e46",
+        "parent": "f9bc0876-8b11-4b54-a8ee-ad455c840ab4",
+        "name": "lambda.js",
+        "type": "JS_LAMBDA",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "PermissionTest/lambda.js",
+        "code": "let AWS = require('aws-sdk');\nconst ddb = new AWS.DynamoDB.DocumentClient();\nlet SL_AWS = require('slappforge-sdk-aws');\nconst sqs = new SL_AWS.SQS(AWS);\nconst sns = new AWS.SNS();\nconst s3 = new AWS.S3();\n\nexports.handler = function (event, context, callback) {\n\n    // s3.listObjects({\n    //     'Bucket': 'my.perm.bucket',\n    //     'MaxKeys': 10,\n    //     'Prefix': ''\n    // }).promise()\n    //     .then(data => {\n    //         console.log(data);           // successful response\n    //         /*\n    //         data = {\n    //             Contents: [\n    //                 {\n    //                    ETag: \"\\\"70ee1738b6b21e2c8a43f3a5ab0eee71\\\"\",\n    //                    Key: \"example1.jpg\",\n    //                    LastModified: \"<Date Representation>\",\n    //                    Owner: {\n    //                       DisplayName: \"myname\",\n    //                       ID: \"12345example25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc\"\n    //                    },\n    //                    Size: 11,\n    //                    StorageClass: \"STANDARD\"\n    //                 },\n    //                 // {...}\n    //             ]\n    //         }\n    //         */\n    //     })\n    //     .catch(err => {\n    //         console.log(err, err.stack); // an error occurred\n    //     });\n\n    sns.publish({\n        Message: 't',\n        MessageAttributes: {},\n        MessageStructure: 'String',\n        TopicArn: 'arn:aws:sns:us-east-1:318300609668:my_new_topic'\n    }).promise()\n        .then(data => {\n            console.log(data);\n        })\n        .catch(err => {\n            // error handling goes here\n            console.log(err);\n        });\n\n    // sqs.receiveMessage({\n    //     QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/my-new-queue`,\n    //     AttributeNames: ['All'],\n    //     MaxNumberOfMessages: '1',\n    //     VisibilityTimeout: '30',\n    //     WaitTimeSeconds: '0'\n    // }).promise()\n    //     .then(receivedMsgData => {\n    //         if (!!(receivedMsgData) && !!(receivedMsgData.Messages)) {\n    //             let receivedMessages = receivedMsgData.Messages;\n    //             receivedMessages.forEach(message => {\n    //                 // your logic to access each message through out the loop. Each message is available under variable message \n    //                 // within this block\n    //             });\n    //         } else {\n    //             // No messages to process\n    //         }\n    //     })\n    //     .catch(err => {\n    //         // error handling goes here\n    //     });\n    // ddb.get({\n    //     TableName: 'My-new-table',\n    //     Key: { '123': '123' }\n    // }).promise()\n    //     .then((data) => {\n    //         //your logic goes here\n    //     })\n    //     .catch((err) => {\n    //         //handle error\n    //     });\n\n    // sqs.receiveMessage({\n    //     QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/KTestSQS`,\n    //     AttributeNames: ['All'],\n    //     MaxNumberOfMessages: '1',\n    //     VisibilityTimeout: '30',\n    //     WaitTimeSeconds: '0'\n    // }).promise()\n    //     .then(receivedMsgData => {\n    //         if (!!(receivedMsgData) && !!(receivedMsgData.Messages)) {\n    //             let receivedMessages = receivedMsgData.Messages;\n    //             receivedMessages.forEach(message => {\n    //                 // your logic to access each message through out the loop. Each message is available under variable message \n    //                 // within this block\n    //             });\n    //         } else {\n    //             // No messages to process\n    //         }\n    //     })\n    //     .catch(err => {\n    //         // error handling goes here\n    //     });\n\n\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "triggers": [],
+        "testCases": {
+          "4fcafbeb-df49-43e9-9b29-78a2a798ab72": {
+            "id": "4fcafbeb-df49-43e9-9b29-78a2a798ab72",
+            "name": "Test event",
+            "functionId": "d4cdbf93-b397-49c2-b68c-d55e96851e46",
+            "event": "{\"key1\": \"value1\", \"key2\": \"value2\", \"key3\": \"value3\"}",
+            "eventTemplate": "hello-world"
+          }
+        }
+      }
+    },
+    "rootNode": "f9bc0876-8b11-4b54-a8ee-ad455c840ab4",
+    "openFiles": [
+      "d4cdbf93-b397-49c2-b68c-d55e96851e46"
+    ],
+    "currentFileId": "d4cdbf93-b397-49c2-b68c-d55e96851e46",
+    "resources": {
+      "s3mypermbucket": {
+        "name": "s3mypermbucket",
+        "type": "S3",
+        "config": {
+          "mode": 0,
+          "bucket": {
+            "region": "us-east-1",
+            "name": "my.perm.bucket"
+          }
+        }
+      },
+      "snsusEast1mynewtopic": {
+        "name": "snsusEast1mynewtopic",
+        "type": "SNS",
+        "config": {
+          "topicMode": 0,
+          "topicName": "my_new_topic",
+          "topicArn": "arn:aws:sns:us-east-1:318300609668:my_new_topic",
+          "topicRegion": "us-east-1",
+          "snsType": 0,
+          "topicDisplayName": "My Topic",
+          "subscriptions": []
+        }
+      },
+      "sqsmyNewQueue": {
+        "name": "sqsmyNewQueue",
+        "type": "SQS",
+        "config": {
+          "mode": 0,
+          "existing": false,
+          "name": "my-new-queue",
+          "url": "https://sqs.us-east-1.amazonaws.com/318300609668/my-new-queue",
+          "selectedRegion": "us-east-1",
+          "deliveryDelay": 0,
+          "deliveryDelayUnit": "seconds",
+          "useRedrivePolicy": false,
+          "useSSE": false,
+          "kmsCustomerMasterKey": "default",
+          "accountId": "318300609668",
+          "dataKeyReusePeriod": 5,
+          "queueType": "standardQueue",
+          "defaultVisibilityTimeout": 30,
+          "defaultVisibilityTimeoutUnit": "seconds",
+          "messageRetentionPeriod": 4,
+          "messageRetentionPeriodUnit": "days",
+          "maximumMessageSize": 256,
+          "receiveMessageWaitTime": 0,
+          "deadLetterQueueName": "",
+          "contentBasedDeduplication": false
+        }
+      },
+      "sqsKTestSQS": {
+        "name": "sqsKTestSQS",
+        "type": "SQS",
+        "config": {
+          "mode": 1,
+          "existing": true,
+          "name": "KTestSQS",
+          "url": "https://sqs.us-east-1.amazonaws.com/318300609668/KTestSQS",
+          "selectedRegion": "us-east-1",
+          "deliveryDelay": "0",
+          "deliveryDelayUnit": "seconds",
+          "queueType": "standardQueue",
+          "defaultVisibilityTimeout": "30",
+          "defaultVisibilityTimeoutUnit": "seconds",
+          "messageRetentionPeriod": "345600",
+          "messageRetentionPeriodUnit": "seconds",
+          "maximumMessageSize": 256,
+          "receiveMessageWaitTime": "0",
+          "queueARN": "arn:aws:sqs:us-east-1:318300609668:KTestSQS"
+        }
+      },
+      "ddbMyNewTable": {
+        "name": "ddbMyNewTable",
+        "type": "DynamoDB",
+        "config": {
+          "mode": 0,
+          "operation": "get",
+          "table": {
+            "arn": "",
+            "name": "My-new-table",
+            "partitionKey": "123",
+            "partitionKeyType": "S",
+            "hasSortKey": false,
+            "sortKey": "",
+            "sortKeyType": "S",
+            "payPerRequest": true,
+            "mode": 0
+          },
+          "isGlobalEditMode": false,
+          "parameters": {
+            "Key": {
+              "123": "123"
+            },
+            "Item": {},
+            "ExpressionAttributeValues": {}
+          },
+          "triggerParams": {},
+          "validator": {
+            "validatableFields": {},
+            "validity": true
+          },
+          "valid": true
+        }
+      }
+    },
+    "customTemplate": {
+      "dialect": null,
+      "definitions": null
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {
+        "aws-sdk": {
+          "name": "aws-sdk",
+          "language": "javascript",
+          "version": "2.176.0",
+          "dev": true,
+          "notRemovable": false
+        },
+        "slappforge-sdk-aws": {
+          "name": "slappforge-sdk-aws",
+          "language": "javascript",
+          "version": "0.0.5",
+          "dev": false,
+          "notRemovable": false
+        }
+      }
+    }
+  },
+  "PROJECT_META": {
+    "projectName": "PermissionTest",
+    "projectDescription": "",
+    "projectVersion": "1.0.0",
+    "projectRegion": "us-east-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1568699937902
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "PermissionTest",
+      "url": "https://github.com/zgma-test/PermissionTest"
+    }
+  }
+}
