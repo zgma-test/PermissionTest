@@ -1,4 +1,5 @@
 let AWS = require('aws-sdk');
+const cognito_idp = new AWS.CognitoIdentityServiceProvider();
 const ddb = new AWS.DynamoDB.DocumentClient();
 let SL_AWS = require('slappforge-sdk-aws');
 const sqs = new SL_AWS.SQS(AWS);
@@ -75,16 +76,29 @@ exports.handler = function (event, context, callback) {
     //         console.log(err);
     //         // error handling goes here
     //     });
-    ddb.get({
-        TableName: 'My-new-table',
-        Key: { '123': '123' }
-    }).promise()
-        .then((data) => {
-            console.log(data);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+
+    // ddb.get({
+    //     TableName: 'BTMenu',
+    //     Key: { 'itemCode': '1' }
+    // }).promise()
+    //     .then((data) => {
+    //         //your logic goes here
+    //     })
+    //     .catch((err) => {
+    //         //handle error
+    //     });
+
+
+    // ddb.get({
+    //     TableName: 'My-new-table',
+    //     Key: { '123': '123' }
+    // }).promise()
+    //     .then((data) => {
+    //         console.log(data);
+    //     })
+    //     .catch((err) => {
+    //         console.log(err);
+    //     });
 
     // sqs.receiveMessage({
     //     QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/KTestSQS`,
@@ -107,6 +121,33 @@ exports.handler = function (event, context, callback) {
     //     .catch(err => {
     //         // error handling goes here
     //     });
+
+    // cognito_idp.listUsers({
+    //     UserPoolId: "us-east-1_D10y3fy0o",
+    //     Limit: 10
+    // }, function (error, data) {
+    //     if (error) {
+    //         // implement error handling logic here
+    //         throw error;
+    //     }
+    //     // your logic goes within this block
+    // });
+
+
+    
+
+
+    cognito_idp.listUsers({
+        UserPoolId: process.env.UserPoolId_cognitomyNewPool,
+        Limit: 10
+    }, function (error, data) {
+        if (error) {
+            // implement error handling logic here
+            throw error;
+        }
+        // your logic goes within this block
+    });
+
 
 
 
